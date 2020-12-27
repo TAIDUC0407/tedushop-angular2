@@ -4,13 +4,14 @@ import { MainComponent } from './main.component';
 import { mainRoutes } from './main.routes';
 import { RouterModule } from "@angular/router";
 import { UserModule } from "./user/user.module";
-
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [MainComponent],
   imports: [
     CommonModule,
     UserModule,
+    HomeModule,
     RouterModule.forChild(mainRoutes)
   ]
 })

@@ -5,7 +5,8 @@ export const mainRoutes: Routes = [
   {
     path: '', component: MainComponent, children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'user', loadChildren: './user/user/module#UserModule' }
+      {path:'home', loadChildren:()=>import('./home/home.module').then(mod=>mod.HomeModule)},
+      { path: 'user', loadChildren:()=>import('./user/user.module').then(mod=>mod.UserModule) }
     ]
   }
 ];
