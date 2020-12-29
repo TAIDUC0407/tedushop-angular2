@@ -32,6 +32,8 @@
               "./src/assets/vendors/font-awesome/css/font-awesome.min.css",
               "./src/assets/vendors/nprogress/nprogress.css",
               "./src/assets/vendors/animate.css/animate.css",
+              "./node_modules/alertifyjs/build/css/alertify.css",
+              "./node_modules/alertifyjs/build/css/themes/default.css",
               "./src/assets/css/custom.css",
               "src/styles.css"
             ],
@@ -39,7 +41,8 @@
               "./src/assets/vendors/jquery/dist/jquery.min.js",
               "./src/assets/vendors/bootstrap/dist/js/bootstrap.min.js",
               "./src/assets/vendors/fastclick/lib/fastclick.js",
-              "./src/assets/vendors/nprogress/nprogress.js"
+              "./src/assets/vendors/nprogress/nprogress.js",
+              "./node_modules/alertifyjs/build/alertify.js"
             ]
           },
           "configurations": {
