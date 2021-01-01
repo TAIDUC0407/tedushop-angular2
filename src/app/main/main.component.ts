@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SystemContants } from '../core/common/system.constant';
 import { UrlConstants } from '../core/common/url.constant';
 import { UtilityService } from '../core/services/utility.service';
+import { AuthenService } from '../core/services/authen.service';
+import { LoggedInUser } from '../core/domain/loggedin.user';
 
 @Component({
   selector: 'app-main',
@@ -9,10 +11,12 @@ import { UtilityService } from '../core/services/utility.service';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-
-  constructor(private _utilityService:UtilityService) { }
+  public user!: LoggedInUser;
+  constructor(private _utilityService:UtilityService,private _authenService: AuthenService) { }
 
   ngOnInit(): void {
+    this.user = JSON.parse(JSON.stringify(localStorage.getItem(SystemContants.CURRENT_USER)));
+    console.log(this.user);
   }
   logout(){
     localStorage.removeItem(SystemContants.CURRENT_USER);
