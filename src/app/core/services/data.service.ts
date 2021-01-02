@@ -31,7 +31,11 @@ export class DataService {
   post(uri: string, data?: any) {
     this.headers.delete("Authorization");
     this.headers.append("Authorization", " Bearer " + this._authenService.getLoggedInUser().access_token);
-    return this._http.post(SystemContants.BASE_API + uri, data, { headers: this.headers }).subscribe(this.exTractData);
+    return this._http.post(SystemContants.BASE_API + uri, data, { headers: this.headers })
+      .pipe(map(res => {
+        let body = JSON.parse(JSON.stringify(res));
+        return body;
+      }));
   }
   put(uri: string, data?: any) {
     this.headers.delete("Authorization");
@@ -55,19 +59,20 @@ export class DataService {
     return body;
   }
 
-  // public handleError(error: any) {
-  //   if (error.status == 401) {
-  //     localStorage.removeItem(SystemContants.CURRENT_USER);
-  //     this._notificationService.printErrorMessage(MessageContstants.LOGIN_AGAIN_MSG);
-  //     this._utilityService.navigateToLogin();
-  //   }
-  //   else {
-  //     let errMsg = (error.message) ? error.message :
-  //       error.status ? `${error.status} - ${error.statusText}` : 'Lỗi hệ thống';
-  //     this._notificationService.printErrorMessage(errMsg);
+  public handleError(error: any) {
+    if (error.status == 401) {
+      localStorage.removeItem(SystemContants.CURRENT_USER);
+      this._notificationService.printErrorMessage(MessageContstants.LOGIN_AGAIN_MSG);
+      this._utilityService.navigateToLogin();
+    }
+    else {
+      let errMsg = (error.message) ? error.message :
+        error.status ? `${error.status} - ${error.statusText}` : 'Lỗi hệ thống';
+      this._notificationService.printErrorMessage(errMsg);
 
-  //     return Observable.throw(errMsg);
-  //   }
+      return Observable.throw(errMsg);
+    }
+    return '';
 
-  // }
+  }
 }
