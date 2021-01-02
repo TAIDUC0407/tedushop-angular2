@@ -8,8 +8,9 @@ import { DataService } from 'src/app/core/services/data.service';
 })
 export class RoleComponent implements OnInit {
   public pageIndex: number = 1;
-  public pageSize: number = 20;
+  public pageSize: number = 1;
   public pageDisplay: number = 10;
+  public totalRow:number =10;
   public filter: string = '';
   public roles:any=[];
 
@@ -22,7 +23,13 @@ export class RoleComponent implements OnInit {
     this._dataService.get('/api/appRole/getlistpaging?page=' + this.pageIndex 
     + '&pageSize=' + this.pageSize + '&filter=' + this.filter).subscribe(res =>{
       this.roles = res.Items;
+      this.pageIndex = res.PageIndex;
+      this.pageSize = res.PageSize;
+      this.totalRow = res.TotalRows;
     });
   }
-
+  pageChanged(event:any):void{
+    this.pageIndex = event.page;
+    this.loadData();
+  }
 }

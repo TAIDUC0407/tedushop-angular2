@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './core/guard/auth.guard';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -14,7 +16,8 @@ import { AuthGuard } from './core/guard/auth.guard';
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    PaginationModule.forRoot()
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
