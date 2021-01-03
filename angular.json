@@ -34,8 +34,8 @@
               "./src/assets/vendors/animate.css/animate.css",
               "./node_modules/alertifyjs/build/css/alertify.css",
               "./node_modules/alertifyjs/build/css/themes/default.css",
-              "node_modules/ng2-daterangepicker/assets/daterangepicker.css",
               "./src/assets/css/custom.css",
+              "node_modules/ng2-daterangepicker/assets/daterangepicker.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -43,7 +43,8 @@
               "./src/assets/vendors/bootstrap/dist/js/bootstrap.min.js",
               "./src/assets/vendors/fastclick/lib/fastclick.js",
               "./src/assets/vendors/nprogress/nprogress.js",
-              "./node_modules/alertifyjs/build/alertify.js"
+              "./node_modules/alertifyjs/build/alertify.js",
+              "./node_modules/moment/moment.js"
             ]
           },
           "configurations": {
