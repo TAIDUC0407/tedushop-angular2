@@ -40,13 +40,19 @@ export class DataService {
   put(uri: string, data?: any) {
     this.headers.delete("Authorization");
     this.headers.append("Authorization", " Bearer " + this._authenService.getLoggedInUser().access_token);
-    return this._http.put(SystemContants.BASE_API + uri, data, { headers: this.headers }).subscribe(this.exTractData);
+    return this._http.put(SystemContants.BASE_API + uri, data, { headers: this.headers }).pipe(map(res =>{
+      let body = JSON.parse(JSON.stringify(res));
+      return body;
+    }));
   }
   delete(uri: string, key: string, id: string) {
     this.headers.delete("Authorization");
     this.headers.append("Authorization", " Bearer " + this._authenService.getLoggedInUser().access_token);
     return this._http.delete(SystemContants.BASE_API + uri + "/?" + key + "=" + id, { headers: this.headers })
-      .subscribe(this.exTractData);
+      .pipe(map(res=>{
+        let body = JSON.parse(JSON.stringify(res));
+        return body;
+      }));
   }
   postFile(uri: string, data?: any, key?: string, id?: string) {
     let newHeaders = new Headers();
