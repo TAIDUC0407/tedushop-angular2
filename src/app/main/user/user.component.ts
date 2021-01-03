@@ -3,6 +3,7 @@ import { DataService } from 'src/app/core/services/data.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { MessageContstants } from 'src/app/core/common/message.constant';
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 
 @Component({
   selector: 'app-user',
@@ -11,6 +12,7 @@ import { MessageContstants } from 'src/app/core/common/message.constant';
 })
 export class UserComponent implements OnInit {
   @ViewChild('modalAddEdit', { static: false }) modalAddEdit!: ModalDirective;
+  public myRoles: string[] = [];
   public pageIndex: number = 1;
   public pageSize: number = 1;
   public pageDisplay: number = 10;
@@ -19,9 +21,19 @@ export class UserComponent implements OnInit {
   public users: any = [];
   public entity: any;
 
-  constructor(private _dataService: DataService, private _notificationService: NotificationService) { }
+  public allRoles: IMultiSelectOption[] = [];
+  public roles!: any[];
+
+  public dateOptions: any = {
+    locale: { format: 'DD/MM/YYYY' },
+    alwaysShowCalendars: false,
+    singleDatePicker: true
+  };
+  constructor(private _dataService: DataService, private _notificationService: NotificationService) { 
+    }
 
   ngOnInit(): void {
+    this.loadRoles();
     this.loadData();
   }
   loadData() {
@@ -33,7 +45,15 @@ export class UserComponent implements OnInit {
         this.totalRow = res.TotalRows;
       });
   }
-  loadRole(id: any) {
+  loadRoles() {
+    this._dataService.get('/api/appRole/getlistall').subscribe((response: any[]) => {
+      this.allRoles = [];
+      for (let role of response) {
+        this.allRoles.push({ id: role.Name, name: role.Description });
+      }
+    }, error => this._dataService.handleError(error));
+  }
+  loadUserDetail(id: any) {
     this._dataService.get('/api/appUser/detail/' + id)
       .subscribe(res => {
         this.entity = res;
@@ -45,7 +65,7 @@ export class UserComponent implements OnInit {
   }
 
   showEditModal(id: any) {
-    this.entity = this.loadRole(id);
+    this.entity = this.loadUserDetail(id);
     this.modalAddEdit.show();
   }
   showAddModal() {
@@ -77,5 +97,8 @@ export class UserComponent implements OnInit {
       this._notificationService.printSuccessMessage(MessageContstants.DELETED_OK_MSG);
       this.loadData();
     });
+  }
+  public selectGender(event:any){
+    this.entity.Gender = event.target.value
   }
 }

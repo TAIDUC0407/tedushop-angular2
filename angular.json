@@ -34,6 +34,7 @@
               "./src/assets/vendors/animate.css/animate.css",
               "./node_modules/alertifyjs/build/css/alertify.css",
               "./node_modules/alertifyjs/build/css/themes/default.css",
+              "node_modules/ng2-daterangepicker/assets/daterangepicker.css",
               "./src/assets/css/custom.css",
               "src/styles.css"
             ],
