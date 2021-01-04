@@ -4,6 +4,7 @@ import { UserComponent } from './user.component';
 import { Routes, RouterModule } from "@angular/router";;
 import { DataService } from 'src/app/core/services/data.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { UploadService } from 'src/app/core/services/upload.service';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
@@ -26,6 +27,6 @@ const userRoutes: Routes = [
     Daterangepicker,
     RouterModule.forChild(userRoutes)
   ],
-  providers:[DataService,NotificationService]
+  providers:[DataService,NotificationService,UploadService]
 })
 export class UserModule { }

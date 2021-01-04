@@ -54,11 +54,24 @@ export class DataService {
         return body;
       }));
   }
-  postFile(uri: string, data?: any, key?: string, id?: string) {
-    let newHeaders = new Headers();
-    newHeaders.append("Authorization", " Bearer " + this._authenService.getLoggedInUser().access_token);
-    return this._http.delete(SystemContants.BASE_API + uri + "/?" + key + "=" + id, { headers: this.headers })
-      .subscribe(this.exTractData);
+  // postFile(uri: string, data?: any, key?: string, id?: string) {
+  //   let newHeaders = new Headers();
+  //   newHeaders.append("Authorization", " Bearer " + this._authenService.getLoggedInUser().access_token);
+  //   return this._http.post(SystemContants.BASE_API + uri + "/?" + key + "=" + id, { headers: this.headers })
+  //   .pipe(map(res=>{
+  //     let body = JSON.parse(JSON.stringify(res));
+  //     return body;
+  //   }));
+  // }
+
+  postFile(uri: string, data?: any) {
+    let newHeader = new HttpHeaders();
+    newHeader.append("Authorization", "Bearer " + this._authenService.getLoggedInUser().access_token);
+    return this._http.post(SystemContants.BASE_API + uri, data, { headers: newHeader })
+    .pipe(map(res=>{
+      let body = JSON.parse(JSON.stringify(res));
+      return body;
+    }));
   }
   private exTractData(res: any) {
     let body = JSON.parse(JSON.stringify(res));
