@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SystemContants } from '../core/common/system.constant';
+import { LoggedInUser } from '../core/domain/loggedin.user';
 import { UrlConstants } from '../core/common/url.constant';
 import { UtilityService } from '../core/services/utility.service';
 import { AuthenService } from '../core/services/authen.service';
-import { LoggedInUser } from '../core/domain/loggedin.user';
+
 
 @Component({
   selector: 'app-main',
@@ -12,11 +13,13 @@ import { LoggedInUser } from '../core/domain/loggedin.user';
 })
 export class MainComponent implements OnInit {
   public user!: LoggedInUser;
+  public uname:string ='11';
   constructor(private _utilityService:UtilityService,private _authenService: AuthenService) { }
 
   ngOnInit(): void {
     this.user = JSON.parse(JSON.stringify(localStorage.getItem(SystemContants.CURRENT_USER)));
     console.log(this.user);
+    this.uname = this.user.fullName;
   }
   logout(){
     localStorage.removeItem(SystemContants.CURRENT_USER);

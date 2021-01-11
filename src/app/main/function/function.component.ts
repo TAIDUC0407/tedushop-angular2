@@ -13,6 +13,7 @@ import { TreeComponent } from '@circlon/angular-tree-component';
 })
 export class FunctionComponent implements OnInit {
   @ViewChild('addEditModal') public addEditModal!: ModalDirective;
+  @ViewChild('permissionModal') public permissionModal!: ModalDirective;
   @ViewChild(TreeComponent)
   private treeFunction!: TreeComponent;
 
@@ -21,12 +22,36 @@ export class FunctionComponent implements OnInit {
   public entity: any;
   public editFlag!: boolean;
   public filter: string = '';
+  public functionId! : string;
+  public _permission!: any[];
+
   constructor(private _dataService: DataService,
     private notificationService: NotificationService,
     private utilityService: UtilityService) { }
 
   ngOnInit(): void {
     this.search();
+  }
+
+  public showPermission(id: any) {
+    this._dataService.get('/api/appRole/getAllPermission?functionId=' + id).subscribe((response: any[]) => {
+      this.functionId = id;
+      this._permission = response;
+      this.permissionModal.show();
+    }, error => this._dataService.handleError(error));
+
+  }
+  public savePermission(valid: boolean | null, _permission: any[]) {
+    if (valid) {
+      var data = {
+        Permissions: this._permission,
+        FunctionId: this.functionId
+      }
+      this._dataService.post('/api/appRole/savePermission', JSON.parse(JSON.stringify(data))).subscribe((response: any) => {
+        this.notificationService.printSuccessMessage(response);
+        this.permissionModal.hide();
+      }, error => this._dataService.handleError(error));
+    }
   }
   //Show add form
   public showAddModal() {
