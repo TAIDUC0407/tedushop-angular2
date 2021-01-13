@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { AuthenService } from 'src/app/core/services/authen.service';
+import { UtilityService } from 'src/app/core/services/utility.service';
 import { MessageContstants } from 'src/app/core/common/message.constant';
 import { SystemContants } from 'src/app/core/common/system.constant';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
@@ -33,8 +35,14 @@ export class UserComponent implements OnInit {
     alwaysShowCalendars: false,
     singleDatePicker: true
   };
-  constructor(private _dataService: DataService, private _notificationService: NotificationService
-    ,private _uploadService:UploadService) { 
+  constructor(private _dataService: DataService
+    , private _notificationService: NotificationService
+    ,private _uploadService:UploadService
+    ,public _authenService : AuthenService
+    ,private _utilityService: UtilityService) { 
+      if(_authenService.checkAccess("USER")==false){
+        _utilityService.navigateToLogin();
+      }
     }
 
   ngOnInit(): void {

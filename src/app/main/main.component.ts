@@ -13,13 +13,11 @@ import { AuthenService } from '../core/services/authen.service';
 })
 export class MainComponent implements OnInit {
   public user!: LoggedInUser;
-  public uname:string ='11';
   constructor(private _utilityService:UtilityService,private _authenService: AuthenService) { }
 
   ngOnInit(): void {
-    this.user = JSON.parse(JSON.stringify(localStorage.getItem(SystemContants.CURRENT_USER)));
-    console.log(this.user);
-    this.uname = this.user.fullName;
+    this.user = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem(SystemContants.CURRENT_USER))));
+    console.log(this.user.fullName);
   }
   logout(){
     localStorage.removeItem(SystemContants.CURRENT_USER);
